@@ -1,0 +1,37 @@
+<br> <br><br> <br>
+<br> <br> <br> <br>
+
+
+<div class="container">
+
+
+      <div class="jumbotron bg-white border mb-0 py-5">
+        <h3>Election Results</h3><br>
+        <br>
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">Candidate</th>
+              <th scope="col">Frequency</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @hash.each do |key,val| %>
+              <tr>
+                <td><%= key %></td>
+                <td><%= val %></td>
+
+              </tr>
+            <% end %>
+            </tbody>
+          </table> <br>
+
+      </div>
+
+
+
+
+</div>
+
+
+

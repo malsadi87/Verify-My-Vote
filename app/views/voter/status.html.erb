@@ -1,0 +1,26 @@
+<br><br><br><br><br><br>
+<div class="container">
+  <div class="jumbotron bg-white border mb-0 py-5">
+
+    <% if @status %>
+      <h3>Vote Status</h3>
+
+      <p>The voter with the following tracker commitment part 2 is a valid voter</p><br>
+
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="10">
+        <%= @beta %>
+      </textarea>
+      <br>
+
+      <h3>Voting</h3>
+
+      <% if @doesVote %>
+      <p>A vote has been cast using this tracker commitment part 2</p>
+      <%else %>
+      <p>There is no vote associated with this particular voter</p>
+        <%end %>
+  <%end %>
+  </div>
+
+
+</div>

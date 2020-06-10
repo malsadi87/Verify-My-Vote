@@ -1,0 +1,17 @@
+<br><br><br><br><br><br>
+<div class="container">
+  <div class="jumbotron bg-white border mb-0 py-5">
+
+
+    <h1>Dashboard, Welcome <%= params[:name] %>
+    </h1>
+    <p class="lead">Select and action</p>
+
+    <%= link_to "View Election", {:controller => :admin, :action => :viewElections}, class: "btn btn-default"  %>
+
+
+
+  </div>
+
+
+</div>

@@ -1,0 +1,56 @@
+<br> <br><br> <br>
+<br> <br> <br> <br>
+
+
+<div class="container">
+  <div class="jumbotron bg-white border mb-0 py-5">
+    <h3 class="text-center">Elections</h3>
+
+    <div class="container" id="list">
+
+      <div class="row">
+        <% for election in @ElectionArray["elections"] %>
+          <div class="col-lg-4 col-md-6 col-12 my-3">
+            <div class="bg-primary card text-white">
+              <div class="card-header d-flex justify-content-between">
+                <span><%= election["name"] %></span>
+                <div class="text-nowrap">
+                </div>
+
+              </div>
+              <div class="card-body px-0">
+
+                <p class="card-title d-flex flex-row rounded mx-1">
+                  <span class="col-6 text-left">ID</span>
+                  <span class="col-6 text-right"><%= election["id"] %></span>
+                </p>
+                <p class="card-title d-flex flex-row rounded mx-1">
+                  <span class="col-6 text-left">Location</span>
+                  <span class="col-6 text-right"><%= election["location"] %></span>
+                </p>
+                <p class="card-title d-flex flex-row rounded mx-1">
+                  <span class="col-6 text-left">Start Date</span>
+                  <span class="col-6 text-right"><%= election["sdate"] %></span>
+                </p>
+
+                <p class="card-title d-flex flex-row mb-0">
+                <span class="col text-center">
+                  <%= link_to 'Upload Pre-election data to Blockchain', {:controller => :admin, :action => :uploadPreElectionToBlockchain}, class:"btn btn-secondary p-0 w-100"%><br><br>
+                  <%= link_to 'Start Election', {:controller => :admin, :action => :startElection, :election => election["name"]}, class:"btn btn-secondary p-0 w-100" %><br><br>
+                  <%= link_to 'Send Verification Params', {:controller => :admin, :action => :sendVerificationParams}, class:"btn btn-secondary p-0 w-100" %>
+
+                </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <% flash.each do |key, value| %>
+          <div style="width:70%; align-self: center; align-items: center; align-content: center;" class="alert alert-<%= key %>"><%= value %></div>
+        <% end %>
+
+      </div>
+
+    </div>
+  </div>
+</div>

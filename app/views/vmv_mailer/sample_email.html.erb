@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<h3>Dear Voter,  </h3>
+<p>
+  Welcome to Verify My Vote. This email contains :
+</p>
+<ol>
+  <li> Beta commitment value <br /> <%= getBeta %></li>
+  <li> Eight-digits Login code  <br /> <%= getCode %></li>
+</ol>
+
+Beta value is a commitment proof which is used in verification. While code is a login credential, please keep it secure.
+
+<br>
+<p>You can login to the VMV system using the following link </p>
+<%= getLink %>
+<br/>
+
+<p>Thanks for joining and have a great day!</p>
+
+</body>
+</html>

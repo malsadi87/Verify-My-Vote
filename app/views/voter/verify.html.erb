@@ -1,0 +1,34 @@
+<br><br><br><br><br><br>
+<div class="container">
+  <div class="jumbotron bg-white border mb-0 py-5">
+
+
+    <h1>Verify My Vote</h1>
+      <br>
+    <p>
+      This shows the vote as submitted to the voting system which matches the verification data you supplied:
+    </p>
+     <br>
+
+
+    <p> <b>Your Vote </b>: <%= @plainVote %></p> <br>
+    <p> <b>Your Tracker Number </b>: <%= @plainTrackerNumber %></p>
+    <br>
+
+    <div class="row align-items-start">
+
+      <p> You can view election data stored on Blockchain through :</p>
+      <ul>
+        <li><a href="http://localhost:3000/main/blockchain_explorer_pre_election"> Data stored before election starts</a>  </li>
+        <li><a href="http://localhost:3000/main/blockchain_explorer_election"> Data stored after votes are cast</a>  </li>
+        <li><a href="http://localhost:3000/main/blockchain_explorer_post_election"> Data stored after election has finished</a>  </li>
+
+      </ul>
+    </div>
+
+
+
+    </div>
+
+
+</div>

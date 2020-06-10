@@ -1,0 +1,23 @@
+{
+  "elections": [
+    {
+      "id": "5",
+      "name": "DemoElection",
+      "sdate": "10-06-2020",
+      "location": "Surrey Uni",
+      "start_time":"09:00",
+      "end_time": "15:00",
+      "description" : "Test Election Demo",
+      "candidates": [
+        {
+          "id": 1,
+          "name": "Alice"
+        },
+        {
+          "id": 2,
+          "name": "Bob"
+        }
+      ]
+    }
+  ]
+}

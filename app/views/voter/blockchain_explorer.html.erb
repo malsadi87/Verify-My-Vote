@@ -1,0 +1,42 @@
+<br> <br><br> <br>
+<br> <br> <br> <br>
+
+
+<div class="container">
+
+
+      <div class="jumbotron bg-white border mb-0 py-5">
+        <h3> Blockchain Data</h3><br>
+
+        <br>
+        <div style="overflow:scroll; height:600px;">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">Creation Time</th>
+            <th scope="col">Beta</th>
+            <th scope="col">Public Key</th>
+            <th scope="col">Hashed Vote</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @hashes.each { |key, value| %>
+            <tr>
+              <td><%= value[3] %></td>
+              <td><%= truncate(value[0])%></td>
+              <td><%= truncate(value[2]) %></td>
+              <td><%= value[1] %></td>
+            </tr>
+          <%  } %>
+
+          </tbody>
+        </table>
+        </div>
+
+
+
+      </div>
+
+
+
+</div>
