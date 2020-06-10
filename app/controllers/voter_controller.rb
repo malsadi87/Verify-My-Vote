@@ -3,7 +3,7 @@ class VoterController < ApplicationController
     require 'csv'
 
     #puts Dir.entries("/Users/malsadi/external/")
-    @table = CSV.parse(File.read("/public/files/voters.csv"), headers: true)
+    @table = CSV.parse(File.read("public/files/voters.csv"), headers: true)
     #puts "trying to generate a file to volume"
 
     #out_file = File.new("public/files/out.txt", "w")
@@ -13,7 +13,7 @@ class VoterController < ApplicationController
 
   def elections
     require 'json'
-    json = File.read('/public/files/elections.json')
+    json = File.read('public/files/elections.json')
     @parsed_json = JSON.parse(json)
   end
 
@@ -24,7 +24,7 @@ class VoterController < ApplicationController
     @election_name = params[:election]
 
     # Date and Time Check against current Date and Time
-    jsonObj = File.read('/public/files/elections.json')
+    jsonObj = File.read('public/files/elections.json')
     elections = JSON.parse(jsonObj)
     election = elections["elections"].select { |obj| obj['name'].to_s == @election_name.to_s}.first
     startTime = Time.parse(election["start_time"])
@@ -38,7 +38,7 @@ class VoterController < ApplicationController
     if !@voter.nil?
       if verify_recaptcha
         @code = @voter[:code]
-        table = CSV.parse(File.read('/public/files/ers-associated-voters.csv'), headers: true)
+        table = CSV.parse(File.read('public/files/ers-associated-voters.csv'), headers: true)
         voterID = get_voter_id_by_code(@code)
         if ! voterID.nil?
           voter_obj = table.select { |row| row['id'].to_i == voterID.to_i}.first
@@ -66,7 +66,7 @@ class VoterController < ApplicationController
   
   def ballot
     require 'json'
-    json = File.read('/public/files/elections.json')
+    json = File.read('public/files/elections.json')
     @parsed_json = JSON.parse(json)
   end
 
@@ -78,7 +78,7 @@ class VoterController < ApplicationController
     @checkes = params[:candidate]
     @election_name = params[:election]
     @voter = params[:voter]
-    json = File.read('/public/files/elections.json')
+    json = File.read('public/files/elections.json')
     @parsed_json = JSON.parse(json)
   end
 
@@ -88,10 +88,10 @@ class VoterController < ApplicationController
     betaVal = session[:voter] #params[:voter]
     if votedBefore(betaVal).nil?
       plainVote =  params[:vote]
-      voters = CSV.parse(File.read('/public/files/ers-associated-voters.csv'), headers: true)
+      voters = CSV.parse(File.read('public/files/ers-associated-voters.csv'), headers: true)
       voter = voters.select { |row| row['beta'].to_i == betaVal.to_i}.first
 
-      CSV.open( '/public/files/ers-plaintext-voters.csv', 'a+' ,:headers => true, quote_char: " ") do |writer|
+      CSV.open( 'public/files/ers-plaintext-voters.csv', 'a+' ,:headers => true, quote_char: " ") do |writer|
         writer.puts(["\"#{betaVal.to_s}\"", voter["id"].to_i, "\"#{plainVote.to_s}\"", "\"#{voter["encryptedTrackerNumberInGroup"].to_s}\"", "\"#{voter["publicKeySignature"].to_s}\"", "\"#{voter["publicKeyTrapdoor"].to_s}\""])
       end
 
@@ -106,7 +106,7 @@ class VoterController < ApplicationController
 
   def get_voter_id_by_code(code)
     require 'csv'
-    table = CSV.parse(File.read("/public/files/voters.csv"), headers: true)
+    table = CSV.parse(File.read("public/files/voters.csv"), headers: true)
     voter_obj = table.select { |row| row['code'].to_i == code.to_i}.first
     if !voter_obj.nil?
       return voter_obj['id']
@@ -116,7 +116,7 @@ class VoterController < ApplicationController
   end
 
   def votedBefore(val)
-    registeredVotes = CSV.parse(File.read('/public/files/ers-plaintext-voters.csv'), headers: true)
+    registeredVotes = CSV.parse(File.read('public/files/ers-plaintext-voters.csv'), headers: true)
     voter = registeredVotes.select { |row| row['beta'].to_i == val.to_i}.first
     return voter
   end
@@ -124,11 +124,11 @@ class VoterController < ApplicationController
   def results
 
     require 'csv'
-    if  !File.exist?('/public/files/public-mixed-voters.csv')
+    if  !File.exist?('public/files/public-mixed-voters.csv')
       flash[:danger] = 'The election result has not been published yet. Please try later.'
       redirect_to '/voter/Profile/'
     end
-    plainVotes = CSV.parse(File.read('/public/files/public-mixed-voters.csv'), headers: true)
+    plainVotes = CSV.parse(File.read('public/files/public-mixed-voters.csv'), headers: true)
     @hash = Hash.new(0)
     plainVotes.each { |pVote|
       if !@hash.has_key?(pVote["plainTextVote"])
@@ -157,19 +157,19 @@ class VoterController < ApplicationController
     @beta     = params[:beta].to_i
     alpha    = params[:alpha]
 
-    encryptedVoters = CSV.parse(File.read('/public/files/public-encrypted-voters.csv'), headers: true)
+    encryptedVoters = CSV.parse(File.read('public/files/public-encrypted-voters.csv'), headers: true)
     voter= encryptedVoters.select { |row| row['beta'].to_i == @beta}.first
 
     publicTrapdoorKey = voter["publicKeyTrapdoor"].to_i
 
-    keys = CSV.parse(File.read('/public/files/voters-keys.csv'), headers: true)
+    keys = CSV.parse(File.read('public/files/voters-keys.csv'), headers: true)
     key =  keys.select { |row| row['publicKeyTrapdoor'].to_i == publicTrapdoorKey}.first
 
     private_key = key["privateKeyTrapdoor"].to_i
 
 
 
-    elections = CSV.parse(File.read('/public/files/public-election-params.csv'), headers: true)
+    elections = CSV.parse(File.read('public/files/public-election-params.csv'), headers: true)
     election = elections.select {|row| row["name"].to_s == @election.to_s}.first
     p = election["p"].to_i
 
@@ -183,11 +183,11 @@ class VoterController < ApplicationController
     tracker_number_in_group = newAlpha.mod_exp(newP - 1 - newSK, newP).mod_mul(newBeta, newP).to_i
 
 
-    trackers = CSV.parse(File.read('/public/files/public-tracker-numbers.csv'), headers: true)
+    trackers = CSV.parse(File.read('public/files/public-tracker-numbers.csv'), headers: true)
     tn = trackers.select {|row| row["trackerNumberInGroup"].to_i == tracker_number_in_group.to_i}.first
 
     @plainTrackerNumber = tn["trackerNumber"]
-    mixed_votes = CSV.parse(File.read('/public/files/public-mixed-voters.csv'), headers: true)
+    mixed_votes = CSV.parse(File.read('public/files/public-mixed-voters.csv'), headers: true)
     plain_vote_row = mixed_votes.select {|row| row["trackerNumber"].to_i == @plainTrackerNumber.to_i}.first
 
     @plainVote = plain_vote_row["plainTextVote"]
