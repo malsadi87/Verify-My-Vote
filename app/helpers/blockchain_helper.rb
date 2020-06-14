@@ -24,7 +24,7 @@ module BlockchainHelper
   $pst_contract_address = nil
 
 
-  $EthClient = Ethereum::HttpClient.new('http://86.185.29.14:7545')
+  $EthClient = Ethereum::HttpClient.new('http://192.168.1.78:7545')
 
 
   def get_client
